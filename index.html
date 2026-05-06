@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2026 京阪巡禮</title>
+
+<style>
+:root{
+  --bg:#f4f1ea;
+  --card:#fffaf1;
+  --ink:#3f3a33;
+  --muted:#7b7165;
+  --line:#ded5c7;
+  --accent:#9b7b55;
+  --accent2:#6f5c45;
+  --soft:#e8dfd1;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Serif TC","Noto Sans TC",serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+.hero{
+  min-height:340px;
+  background:
+    linear-gradient(rgba(45,38,30,.35),rgba(45,38,30,.55)),
+    url("https://source.unsplash.com/1600x900/?kyoto,japan,temple") center/cover;
+  color:white;
+  display:flex;
+  align-items:end;
+  padding:32px 20px;
+}
+.hero-inner{max-width:1050px;margin:auto;width:100%}
+.hero h1{font-size:42px;margin:0 0 8px;letter-spacing:4px}
+.hero p{margin:0;font-size:17px;opacity:.95}
+nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(244,241,234,.95);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:10px;
+}
+nav button{
+  border:1px solid var(--line);
+  background:var(--soft);
+  color:var(--ink);
+  padding:9px 14px;
+  border-radius:999px;
+  margin:3px;
+  cursor:pointer;
+}
+nav button.active{
+  background:var(--accent);
+  color:white;
+}
+main{
+  max-width:1050px;
+  margin:0 auto;
+  padding:22px 16px 60px;
+}
+.section{display:none}
+.section.active{display:block}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(71,61,48,.07);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+h2{font-size:28px;margin:8px 0 16px}
+h3{margin:0 0 8px;font-size:20px}
+p{line-height:1.75}
+.small{color:var(--muted);font-size:14px}
+.place-img{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  border-radius:14px;
+  margin:10px 0;
+  background:#ddd;
+}
+.timeline{
+  border-left:2px solid var(--accent);
+  padding-left:16px;
+}
+.stop{
+  margin:0 0 18px;
+  position:relative;
+}
+.stop:before{
+  content:"";
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:var(--accent);
+  position:absolute;
+  left:-23px;
+  top:7px;
+}
+a{
+  color:var(--accent2);
+  font-weight:700;
+  text-decoration:none;
+}
+.badge{
+  display:inline-block;
+  background:var(--soft);
+  color:var(--accent2);
+  padding:4px 9px;
+  border-radius:999px;
+  font-size:13px;
+  margin:3px 3px 3px 0;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:white;
+  margin:6px 0 12px;
+  font-size:16px;
+}
+.result{
+  font-size:26px;
+  font-weight:800;
+  color:var(--accent2);
+}
+.phrase{
+  font-size:22px;
+  font-weight:800;
+  margin-top:8px;
+}
+.cn{
+  color:var(--muted);
+  margin-bottom:4px;
+}
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:30px 12px;
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>2026 京阪巡禮</h1>
+    <p>2026/5/23 - 2026/5/30｜京都・奈良・宇治・嵐山・天橋立・伊根舟屋</p>
+  </div>
+</section>
+
+<nav id="nav"></nav>
+
+<main id="app"></main>
+
+<footer>⛩️ 旅途中慢慢走、慢慢看，把京都收進記憶裡。</footer>
+
+<script>
+const weatherNote = {
+  "5/23":"抵達日｜建議薄外套，晚上錦市場周邊可能偏涼。",
+  "5/24":"京都東山步行日｜穿好走的鞋，午後注意補水。",
+  "5/25":"京都市區寺社巡禮｜早晚偏涼，建議洋蔥式穿搭。",
+  "5/26":"奈良＋宇治移動日｜戶外多，建議防曬與雨傘。",
+  "5/27":"嵐山＋保津峽遊船｜船上風較明顯，建議帶薄外套。",
+  "5/28":"天橋立＋伊根舟屋｜靠海風大，建議防風外套。",
+  "5/29":"京都市區自由日｜依實際安排調整。",
+  "5/30":"回國日｜白天可輕鬆走東西本願寺，下午移動機場。"
+};
+
+const sections = [
+{
+id:"home",
+title:"首頁",
+html:`
+<h2>旅行總覽</h2>
+
+<div class="grid">
+  <div class="card">
+    <h3>✈️ 航班｜長榮航空</h3>
+    <p><b>去程</b><br>5/23（六）08:30 TPE 二航 → 12:10 KIX 一航</p>
+    <p><b>回程</b><br>5/30（六）18:30 KIX 一航 → 20:30 TPE 二航</p>
+  </div>
+
+  <div class="card">
+    <h3>🏠 住宿</h3>
+    <p><b>5/23 - 5/27</b><br>相鐵 FRESA INN 京都四條烏丸</p>
+    <a target="_blank" href="https://maps.app.goo.gl/NWdPBffshNfAvLSY6?g_st=ipc">Google Map</a>
+    <p><b>5/27 - 5/30</b><br>ホテル・アンドルームス京都七条</p>
+    <a target="_blank" href="https://maps.app.goo.gl/rWsgZ8T94aN2nRBi7?g_st=ic">Google Map</a>
+  </div>
+</div>
+
+<div class="card">
+  <h3>🗓️ 行程總覽</h3>
+  <p>
+    <span class="badge">5/23 入境・錦市場</span>
+    <span class="badge">5/24 伏見稻荷・清水寺</span>
+    <span class="badge">5/25 二条城・京都御苑・南禪寺</span>
+    <span class="badge">5/26 奈良・宇治</span>
+    <span class="badge">5/27 嵐山・保津峽遊船</span>
+    <span class="badge">5/28 天橋立・伊根舟屋</span>
+    <span class="badge">5/29 京都市區巡禮</span>
+    <span class="badge">5/30 東西本願寺・回國</span>
+  </p>
+</div>
+
+<div class="card">
+  <h3>🌦️ 天氣提醒</h3>
+  <p>此行程為 2026 年未來日期，逐日準確天氣請出發前 7–10 天更新。五月下旬關西通常白天溫暖、早晚偏涼，建議薄外套、防曬、摺疊傘都帶。</p>
+</div>
+`
+},
+{
+id:"d523",
+title:"5/23",
+date:"5/23（六）入境日本｜抵達京都｜錦市場",
+places:[
+["關西機場 → 京都","HARUKA 可搭 13:14→14:34 或 13:44→15:04。抵達京都後轉京都市營烏丸線到四条，4號出口步行約2分鐘到飯店。","https://source.unsplash.com/1200x800/?kansai-airport,haruka-train","https://www.google.com/maps/search/?api=1&query=Kansai+Airport"],
+["相鐵FRESA INN 京都四條烏丸","位於四条烏丸附近，交通方便，適合作為京都市區與周邊景點移動的住宿點。","https://source.unsplash.com/1200x800/?kyoto,hotel","https://maps.app.goo.gl/NWdPBffshNfAvLSY6?g_st=ipc"],
+["錦市場","京都代表性的傳統市場，有京漬物、海鮮、甜點、串燒與各式小吃，很適合抵達日輕鬆散步覓食。","https://source.unsplash.com/1200x800/?nishiki-market,kyoto","https://maps.app.goo.gl/X6jWX8faGuUwZnQ37"],
+["錦天滿宮","位於新京極商店街附近的小巧神社，以學問、智慧與祈願聞名，夜晚燈籠氛圍很有京都感。","https://source.unsplash.com/1200x800/?kyoto,shrine,lantern","https://maps.app.goo.gl/2y5j2H9z48KcpknV8"]
+]
+},
+{
+id:"d524",
+title:"5/24",
+date:"5/24（日）伏見稲荷大社｜八坂神社｜祇園｜清水寺",
+places:[
+["伏見稲荷大社","京都最具代表性的神社之一，以綿延山道的千本鳥居聞名。建議早點去，人潮比較少、拍照也更乾淨。","https://source.unsplash.com/1200x800/?fushimi-inari,kyoto","https://www.google.com/maps/search/?api=1&query=Fushimi+Inari+Taisha"],
+["八坂神社","祇園地區的重要神社，也是京都祭典文化的核心之一。從祇園四条出來後很適合一路步行往東山方向。","https://source.unsplash.com/1200x800/?yasaka-shrine,kyoto","https://maps.app.goo.gl/uTqC3beoXdf6Yt9X6"],
+["高台寺","豐臣秀吉正室寧寧所建，庭園與夜間點燈很有名，路線上可順遊二三年坂。","https://source.unsplash.com/1200x800/?kodaiji,kyoto","https://maps.app.goo.gl/M8cEatX2NM4p96eR7"],
+["二年坂・三年坂・清水坂","京都最經典的石板坡道商店街，沿途有茶屋、伴手禮、和風雜貨與拍照點。","https://source.unsplash.com/1200x800/?sannenzaka,kyoto","https://maps.app.goo.gl/6CZKQHjGkq8Wnckm9"],
+["清水寺","京都代表性世界文化遺產，以清水舞台與眺望京都市景聞名。傍晚前後光線很美，但人也會多。","https://source.unsplash.com/1200x800/?kiyomizudera,kyoto","https://maps.app.goo.gl/gA4ikYNsTQvPRWie8"]
+]
+},
+{
+id:"d525",
+title:"5/25",
+date:"5/25（一）京都御苑｜平安神宮｜南禪寺",
+places:[
+["二条城","德川家康建造的城郭，見證江戶幕府開始與結束的重要歷史場域。二之丸御殿與庭園很值得慢慢看。","https://source.unsplash.com/1200x800/?nijo-castle,kyoto","https://maps.app.goo.gl/b1SHgCGyDYYr3qo38"],
+["京都御苑","京都市中心的大型綠地，曾是公家宅邸聚集區。適合散步、拍自然感照片，也能感受京都較安靜的一面。","https://source.unsplash.com/1200x800/?kyoto-gyoen","https://maps.app.goo.gl/9ud4gSuqZAmnD99Q7"],
+["平安神宮","以朱紅色大鳥居與寬闊境內聞名，建築風格華麗，與京都御所、南禪寺路線能串成一日。","https://source.unsplash.com/1200x800/?heian-jingu,kyoto","https://www.google.com/maps/search/?api=1&query=Heian+Jingu"],
+["南禪寺","京都禪寺代表之一，境內水路閣非常有特色，紅磚拱門與寺院氛圍形成很漂亮的對比。","https://source.unsplash.com/1200x800/?nanzenji,kyoto","https://www.google.com/maps/search/?api=1&query=Nanzenji+Kyoto"]
+]
+},
+{
+id:"d526",
+title:"5/26",
+date:"5/26（二）興福寺｜奈良公園｜宇治｜平等院",
+places:[
+["興福寺","奈良代表寺院之一，五重塔是奈良的經典景色。從近鐵奈良站步行前往奈良公園會順路經過。","https://source.unsplash.com/1200x800/?kofukuji,nara","https://www.google.com/maps/search/?api=1&query=Kofukuji+Nara"],
+["奈良公園・鹿苑","奈良最經典區域，可以近距離看到鹿群。記得鹿仙貝要拿穩，不要逗鹿。","https://source.unsplash.com/1200x800/?nara-park,deer","https://www.google.com/maps/search/?api=1&query=Nara+Park"],
+["平等院表參道","宇治車站到平等院一帶的商店街，抹茶甜點、伴手禮與茶香氛圍很濃。","https://source.unsplash.com/1200x800/?uji,matcha,japan","https://www.google.com/maps/search/?api=1&query=Byodoin+Omotesando+Uji"],
+["平等院","十円硬幣上的鳳凰堂原型，宇治最重要景點之一。建築倒映在池中的畫面非常經典。","https://source.unsplash.com/1200x800/?byodoin,uji","https://www.google.com/maps/search/?api=1&query=Byodoin+Temple+Uji"],
+["宇治神社","位於宇治川附近的小巧神社，與宇治上神社、平等院一帶可順路散步。","https://source.unsplash.com/1200x800/?uji-shrine,japan","https://www.google.com/maps/search/?api=1&query=Uji+Shrine"]
+]
+},
+{
+id:"d527",
+title:"5/27",
+date:"5/27（三）換飯店｜保津峽遊船｜天龍寺｜嵐山竹林",
+places:[
+["ホテル・アンドルームス京都七条","靠近京都車站與七条區域，適合後半段移動與回程搭 HARUKA。早上寄放行李後再去嵐山。","https://source.unsplash.com/1200x800/?kyoto,hotel,street","https://maps.app.goo.gl/rWsgZ8T94aN2nRBi7?g_st=ic"],
+["保津峽遊船","從龜岡出發，沿保津川順流而下到嵐山，約 1.5–2 小時。你已在 KLOOK 買票，記得提早到。","https://source.unsplash.com/1200x800/?hozugawa,river,kyoto","https://maps.app.goo.gl/NG1V8GmNn6hZJXf96?g_st=ic"],
+["龜山公園","保津峽遊船終點附近，接著可步行前往天龍寺與嵐山竹林。","https://source.unsplash.com/1200x800/?arashiyama,park","https://maps.app.goo.gl/7p98jT4yWLGGTXGA6?g_st=ic"],
+["天龍寺","嵐山代表寺院，庭園景色很美，也是世界文化遺產。適合安排在竹林前後。","https://source.unsplash.com/1200x800/?tenryuji,kyoto","https://www.google.com/maps/search/?api=1&query=Tenryuji+Kyoto"],
+["嵐山竹林","京都經典竹林步道，建議避開正中午人潮。從野宮神社附近步行可接到竹林。","https://source.unsplash.com/1200x800/?arashiyama,bamboo","https://www.google.com/maps/search/?api=1&query=Arashiyama+Bamboo+Grove"],
+["Coffee Shop Yamamoto","嵐山老派咖啡店，適合逛完竹林後休息吃甜點。","https://source.unsplash.com/1200x800/?japanese,cafe,pancake","https://maps.app.goo.gl/kn63LhaAazwLcGh76?g_st=ic"]
+]
+},
+{
+id:"d528",
+title:"5/28",
+date:"5/28（四）天橋立｜伊根舟屋 KLOOK 一日 Plan",
+places:[
+["天橋立","日本三景之一，以狹長松林沙洲橫跨海灣聞名。可搭纜車到展望台，用倒著看的方式欣賞飛龍觀。","https://source.unsplash.com/1200x800/?amanohashidate,japan","https://www.google.com/maps/search/?api=1&query=Amanohashidate"],
+["伊根舟屋","沿海而建的傳統舟屋聚落，一樓停船、二樓生活，是京都北部非常有特色的景色。","https://source.unsplash.com/1200x800/?ine,funaya,japan","https://www.google.com/maps/search/?api=1&query=Ine+Funaya"]
+]
+},
+{
+id:"d529",
+title:"5/29",
+date:"5/29（五）京都市區巡禮",
+places:[
+["京都市區自由巡禮","這天可以依體力補逛河原町、祇園、京都車站、伴手禮店，或安排咖啡廳與購物。","https://source.unsplash.com/1200x800/?kyoto,street","https://www.google.com/maps/search/?api=1&query=Kyoto+Kawaramachi"],
+["伴手禮採買","建議把藥妝、抹茶甜點、京都限定點心放這天處理，避免最後一天趕機場太緊。","https://source.unsplash.com/1200x800/?kyoto,souvenir","https://www.google.com/maps/search/?api=1&query=Kyoto+Station+Souvenir"]
+]
+},
+{
+id:"d530",
+title:"5/30",
+date:"5/30（六）東西本願寺｜回國",
+places:[
+["東本願寺","從七条住宿區步行可達，境內開闊莊嚴，很適合回國日前安排輕鬆散步。","https://source.unsplash.com/1200x800/?higashi-honganji,kyoto","https://www.google.com/maps/search/?api=1&query=Higashi+Honganji+Kyoto"],
+["西本願寺","京都重要寺院之一，與東本願寺距離不遠，可一起安排。建築宏偉，氛圍沉穩。","https://source.unsplash.com/1200x800/?nishi-honganji,kyoto","https://www.google.com/maps/search/?api=1&query=Nishi+Honganji+Kyoto"],
+["京都 → 關西空港","14:00 京都 → 15:20 關西空港，搭 JR HARUKA 33號。建議預留行李領取與車站移動時間。","https://source.unsplash.com/1200x800/?haruka,train,japan","https://www.google.com/maps/search/?api=1&query=Kyoto+Station"]
+]
+},
+{
+id:"currency",
+title:"匯率換算",
+html:`
+<h2>💱 匯率換算</h2>
+<div class="card">
+  <label>匯率設定：1 JPY = 多少 TWD</label>
+  <input id="rate" type="number" value="0.22" step="0.001">
+
+  <label>輸入日幣 JPY</label>
+  <input id="jpy" type="number" placeholder="例如 5500">
+
+  <div class="result" id="twdResult">約 NT$ 0</div>
+  <p class="small">可依出發當天實際匯率自行修改上方數字。</p>
+</div>
+
+<div class="grid">
+  <div class="card"><h3>¥1,000</h3><p>約 NT$ <span class="quick" data-jpy="1000"></span></p></div>
+  <div class="card"><h3>¥3,000</h3><p>約 NT$ <span class="quick" data-jpy="3000"></span></p></div>
+  <div class="card"><h3>¥5,000</h3><p>約 NT$ <span class="quick" data-jpy="5000"></span></p></div>
+  <div class="card"><h3>¥10,000</h3><p>約 NT$ <span class="quick" data-jpy="10000"></span></p></div>
+</div>
+`
+},
+{
+id:"phrases",
+title:"日文字卡",
+html:`
+<h2>🗾 旅遊日文字卡</h2>
+<div class="grid">
+  ${[
+    ["我要這個","これをください"],
+    ["這個多少錢？","これはいくらですか？"],
+    ["可以刷卡嗎？","カードは使えますか？"],
+    ["可以用現金嗎？","現金は使えますか？"],
+    ["請幫我裝袋","袋に入れてください"],
+    ["不用袋子，謝謝","袋はいりません、ありがとうございます"],
+    ["請問廁所在哪裡？","トイレはどこですか？"],
+    ["我有預約","予約しています"],
+    ["可以寄放行李嗎？","荷物を預かってもらえますか？"],
+    ["我要辦理入住","チェックインをお願いします"],
+    ["我要辦理退房","チェックアウトをお願いします"],
+    ["請問這班車有到京都嗎？","この電車は京都に行きますか？"],
+    ["請問這裡可以拍照嗎？","ここで写真を撮ってもいいですか？"],
+    ["不好意思，我不太會說日文","すみません、日本語があまり話せません"],
+    ["請說慢一點","ゆっくり話してください"],
+    ["可以幫我叫計程車嗎？","タクシーを呼んでもらえますか？"]
+  ].map(p=>`
+    <div class="card">
+      <div class="cn">${p[0]}</div>
+      <div class="phrase">${p[1]}</div>
+    </div>
+  `).join("")}
+</div>
+`
+}
+];
+
+function buildNav(){
+  const nav=document.getElementById("nav");
+  sections.forEach((s,i)=>{
+    const b=document.createElement("button");
+    b.textContent=s.title;
+    b.onclick=()=>show(s.id);
+    if(i===0)b.classList.add("active");
+    nav.appendChild(b);
+  });
+}
+
+function buildSections(){
+  const app=document.getElementById("app");
+  sections.forEach((s,i)=>{
+    const sec=document.createElement("section");
+    sec.className="section"+(i===0?" active":"");
+    sec.id=s.id;
+
+    if(s.html){
+      sec.innerHTML=s.html;
+    }else{
+      sec.innerHTML=`
+        <h2>${s.date}</h2>
+        <div class="card">
+          <h3>🌦️ 今日天氣備忘</h3>
+          <p>${weatherNote[s.title]}</p>
+          <p class="small">實際天氣請出發前更新：最高/最低溫、降雨機率、是否需要雨具。</p>
+        </div>
+        <div class="timeline">
+          ${s.places.map(p=>`
+            <div class="stop">
+              <div class="card">
+                <h3>${p[0]}</h3>
+                <img class="place-img" src="${p[2]}" alt="${p[0]}">
+                <p>${p[1]}</p>
+                <a href="${p[3]}" target="_blank">📍 開啟 Google Map</a>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+    app.appendChild(sec);
+  });
+}
+
+function show(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  [...document.querySelectorAll("nav button")].find(b=>b.textContent===sections.find(s=>s.id===id).title).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  updateCurrency();
+}
+
+function updateCurrency(){
+  const rate=document.getElementById("rate");
+  const jpy=document.getElementById("jpy");
+  const result=document.getElementById("twdResult");
+  if(rate && jpy && result){
+    const twd=(Number(jpy.value||0)*Number(rate.value||0)).toFixed(0);
+    result.textContent="約 NT$ "+twd;
+    document.querySelectorAll(".quick").forEach(el=>{
+      el.textContent=(Number(el.dataset.jpy)*Number(rate.value||0)).toFixed(0);
+    });
+  }
+}
+
+document.addEventListener("input",e=>{
+  if(e.target.id==="rate" || e.target.id==="jpy") updateCurrency();
+});
+
+buildNav();
+buildSections();
+updateCurrency();
+</script>
+
+</body>
+</html>
