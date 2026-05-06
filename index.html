@@ -7,150 +7,377 @@
 
 <style>
 :root{
-  --bg:#f4f1ea;
-  --card:#fffaf1;
-  --ink:#3f3a33;
-  --muted:#7b7165;
-  --line:#ded5c7;
-  --accent:#9b7b55;
-  --accent2:#6f5c45;
-  --soft:#e8dfd1;
+  --bg:#faf7ef;
+  --paper:#fffdf8;
+  --paper-soft:#f6efe3;
+  --wood:#c9a36f;
+  --wood-dark:#8c6a43;
+  --matcha:#8da37f;
+  --matcha-dark:#667a58;
+  --sakura:#e9b7ad;
+  --sakura-soft:#fae8e3;
+  --ink:#3e3830;
+  --muted:#7c7064;
+  --line:#e6dac9;
+  --shadow:0 12px 32px rgba(91,70,42,.10);
+  --radius:22px;
 }
+
 *{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Serif TC","Noto Sans TC",serif;
-  background:var(--bg);
-  color:var(--ink);
-}
-.hero{
-  min-height:340px;
   background:
-    linear-gradient(rgba(45,38,30,.35),rgba(45,38,30,.55)),
-    url("https://source.unsplash.com/1600x900/?kyoto,japan,temple") center/cover;
-  color:white;
-  display:flex;
-  align-items:end;
-  padding:32px 20px;
+    radial-gradient(circle at top left, rgba(233,183,173,.22), transparent 30%),
+    radial-gradient(circle at top right, rgba(141,163,127,.18), transparent 28%),
+    var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Noto Serif TC","Helvetica Neue",Arial,sans-serif;
 }
-.hero-inner{max-width:1050px;margin:auto;width:100%}
-.hero h1{font-size:42px;margin:0 0 8px;letter-spacing:4px}
-.hero p{margin:0;font-size:17px;opacity:.95}
+
+.hero{
+  min-height:390px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.12), rgba(64,48,32,.48)),
+    url("IMG_0426.png") center/cover fixed;
+  display:flex;
+  align-items:flex-end;
+  padding:34px 18px;
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0 0;
+  height:110px;
+  background:linear-gradient(transparent, var(--bg));
+}
+
+.hero-inner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:1120px;
+  margin:0 auto;
+}
+
+.kicker{
+  display:inline-block;
+  padding:7px 12px;
+  background:rgba(255,253,248,.78);
+  color:var(--wood-dark);
+  border-radius:999px;
+  font-weight:800;
+  letter-spacing:1px;
+  margin-bottom:12px;
+  backdrop-filter:blur(10px);
+}
+
+.hero h1{
+  margin:0 0 8px;
+  font-size:44px;
+  letter-spacing:4px;
+  text-shadow:0 3px 18px rgba(0,0,0,.28);
+}
+
+.hero p{
+  margin:0;
+  line-height:1.7;
+  font-size:16px;
+  text-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+
 nav{
   position:sticky;
   top:0;
-  z-index:10;
-  background:rgba(244,241,234,.95);
-  backdrop-filter:blur(10px);
+  z-index:99;
+  background:rgba(250,247,239,.88);
+  backdrop-filter:blur(16px);
   border-bottom:1px solid var(--line);
   overflow-x:auto;
   white-space:nowrap;
-  padding:10px;
+  padding:10px 9px;
 }
+
 nav button{
   border:1px solid var(--line);
-  background:var(--soft);
+  background:rgba(255,253,248,.92);
   color:var(--ink);
-  padding:9px 14px;
+  padding:10px 14px;
   border-radius:999px;
   margin:3px;
+  font-size:14px;
+  font-weight:700;
   cursor:pointer;
+  transition:.22s ease;
 }
+
+nav button:hover{
+  transform:translateY(-1px);
+  background:var(--paper-soft);
+}
+
 nav button.active{
-  background:var(--accent);
+  background:var(--matcha);
   color:white;
+  border-color:var(--matcha);
+  box-shadow:0 6px 16px rgba(102,122,88,.22);
 }
+
 main{
-  max-width:1050px;
+  width:100%;
+  max-width:1120px;
   margin:0 auto;
-  padding:22px 16px 60px;
+  padding:22px 14px 76px;
 }
+
 .section{display:none}
 .section.active{display:block}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(71,61,48,.07);
+
+h2{
+  font-size:28px;
+  margin:10px 0 16px;
+  letter-spacing:.5px;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:16px;
+
+h3{
+  margin:0 0 8px;
+  font-size:20px;
 }
-h2{font-size:28px;margin:8px 0 16px}
-h3{margin:0 0 8px;font-size:20px}
-p{line-height:1.75}
-.small{color:var(--muted);font-size:14px}
-.place-img{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-  border-radius:14px;
-  margin:10px 0;
-  background:#ddd;
+
+p{
+  line-height:1.78;
 }
-.timeline{
-  border-left:2px solid var(--accent);
-  padding-left:16px;
-}
-.stop{
-  margin:0 0 18px;
-  position:relative;
-}
-.stop:before{
-  content:"";
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:var(--accent);
-  position:absolute;
-  left:-23px;
-  top:7px;
-}
+
 a{
-  color:var(--accent2);
-  font-weight:700;
+  color:var(--wood-dark);
+  font-weight:800;
   text-decoration:none;
 }
+
+.card{
+  background:rgba(255,253,248,.92);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;
+}
+
+.cover-wrap{
+  border-radius:18px;
+  overflow:hidden;
+  margin:11px 0;
+  background:#eadfce;
+}
+
+.cover{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.02);
+  transition:transform .55s ease, filter .55s ease;
+}
+
+.card:hover .cover{
+  transform:scale(1.075);
+  filter:saturate(1.05) brightness(1.03);
+}
+
+.hotel-img{
+  height:235px;
+}
+
+.small{
+  color:var(--muted);
+  font-size:14px;
+}
+
 .badge{
   display:inline-block;
-  background:var(--soft);
-  color:var(--accent2);
-  padding:4px 9px;
+  background:#f1e5d4;
+  color:var(--wood-dark);
+  padding:6px 11px;
   border-radius:999px;
   font-size:13px;
-  margin:3px 3px 3px 0;
-}
-input,select{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:white;
-  margin:6px 0 12px;
-  font-size:16px;
-}
-.result{
-  font-size:26px;
   font-weight:800;
-  color:var(--accent2);
+  margin:4px 4px 4px 0;
 }
+
+.day-head{
+  background:linear-gradient(135deg, #fffdf8, #f6efe3);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+
+.weather-card{
+  background:linear-gradient(135deg, #f7efe4, #fae8e3);
+  border-left:6px solid var(--sakura);
+}
+
+.route-card{
+  background:linear-gradient(135deg, #fffdf8, #f2eadc);
+}
+
+.route{
+  background:rgba(255,255,255,.58);
+  border:1px solid var(--line);
+  border-left:5px solid var(--wood);
+  padding:14px 15px;
+  border-radius:17px;
+  margin:12px 0;
+}
+
+.route-title{
+  font-weight:900;
+  color:var(--wood-dark);
+  margin-bottom:6px;
+}
+
+.timeline{
+  position:relative;
+  margin-left:9px;
+  padding-left:22px;
+}
+
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:8px;
+  bottom:8px;
+  width:2px;
+  background:linear-gradient(var(--wood), var(--matcha), var(--sakura));
+  border-radius:999px;
+}
+
+.stop{
+  position:relative;
+  margin-bottom:18px;
+}
+
+.stop::before{
+  content:"";
+  position:absolute;
+  left:-28px;
+  top:24px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:var(--paper);
+  border:4px solid var(--matcha);
+  box-shadow:0 0 0 4px var(--bg);
+}
+
+.place-card{
+  transition:transform .28s ease, box-shadow .28s ease;
+}
+
+.place-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 38px rgba(91,70,42,.14);
+}
+
+.map-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 13px;
+  border-radius:999px;
+  background:#f0e3cf;
+  color:var(--wood-dark);
+  margin-top:4px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  font-size:16px;
+  margin:6px 0 13px;
+  background:white;
+}
+
+.result{
+  font-size:30px;
+  font-weight:900;
+  color:var(--wood-dark);
+}
+
 .phrase{
   font-size:22px;
-  font-weight:800;
+  font-weight:900;
   margin-top:8px;
 }
+
 .cn{
   color:var(--muted);
-  margin-bottom:4px;
 }
+
 footer{
   text-align:center;
   color:var(--muted);
-  padding:30px 12px;
+  padding:28px 12px;
+}
+
+@media(max-width:700px){
+  .hero{
+    min-height:310px;
+    background-attachment:scroll;
+    padding:26px 16px;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  main{
+    padding:16px 12px 70px;
+  }
+
+  h2{
+    font-size:23px;
+  }
+
+  .card{
+    padding:15px;
+    border-radius:20px;
+  }
+
+  .cover{
+    height:190px;
+  }
+
+  .hotel-img{
+    height:200px;
+  }
+
+  nav button{
+    font-size:13px;
+    padding:9px 12px;
+  }
 }
 </style>
 </head>
@@ -159,27 +386,46 @@ footer{
 
 <section class="hero">
   <div class="hero-inner">
+    <div class="kicker">KYOTO / NARA / UJI / ARASHIYAMA</div>
     <h1>2026 京阪巡禮</h1>
-    <p>2026/5/23 - 2026/5/30｜京都・奈良・宇治・嵐山・天橋立・伊根舟屋</p>
+    <p>2026/5/23 - 2026/5/30｜京都・奈良・宇治・嵐山・天橋立・伊根舟屋・美山</p>
   </div>
 </section>
 
 <nav id="nav"></nav>
-
 <main id="app"></main>
-
-<footer>⛩️ 旅途中慢慢走、慢慢看，把京都收進記憶裡。</footer>
+<footer>日式無印風旅遊手冊｜爸媽也能看懂的交通版</footer>
 
 <script>
-const weatherNote = {
-  "5/23":"抵達日｜建議薄外套，晚上錦市場周邊可能偏涼。",
-  "5/24":"京都東山步行日｜穿好走的鞋，午後注意補水。",
-  "5/25":"京都市區寺社巡禮｜早晚偏涼，建議洋蔥式穿搭。",
-  "5/26":"奈良＋宇治移動日｜戶外多，建議防曬與雨傘。",
-  "5/27":"嵐山＋保津峽遊船｜船上風較明顯，建議帶薄外套。",
-  "5/28":"天橋立＋伊根舟屋｜靠海風大，建議防風外套。",
-  "5/29":"京都市區自由日｜依實際安排調整。",
-  "5/30":"回國日｜白天可輕鬆走東西本願寺，下午移動機場。"
+const IMG = {
+  banner:"IMG_0426.png",
+  fresa:"IMG_0409.jpeg",
+  androoms:"IMG_0410.jpeg",
+  nishiki:"IMG_0411.webp",
+  nishikiTenmangu:"IMG_0413.jpeg",
+  fushimi:"IMG_0414.webp",
+  yasaka:"IMG_0427.jpeg",
+  kodaiji:"IMG_0416.jpeg",
+  sannenzaka:"IMG_0417.jpeg",
+  kiyomizu:"IMG_0418.jpeg",
+  nijo:"IMG_0433.webp",
+  gyoen:"IMG_0423.jpeg",
+  heian:"IMG_0424.jpeg",
+  nanzenji:"IMG_0425.webp",
+  kofukuji:"IMG_0435.webp",
+  naraPark:"IMG_0436.webp",
+  byodoin:"IMG_0434.webp",
+  ujiShrine:"IMG_0431.webp",
+  ujigami:"IMG_0432.jpeg",
+  hozugawa:"IMG_0437.webp",
+  tenryuji:"IMG_0438.png",
+  bamboo:"IMG_0439.webp",
+  yamamoto:"IMG_0440.jpeg",
+  amanohashidate:"IMG_0441.webp",
+  ine:"IMG_0442.jpeg",
+  miyama:"IMG_0443.jpeg",
+  higashi:"IMG_0444.jpeg",
+  nishi:"IMG_0445.jpeg"
 };
 
 const sections = [
@@ -196,12 +442,25 @@ html:`
     <p><b>回程</b><br>5/30（六）18:30 KIX 一航 → 20:30 TPE 二航</p>
   </div>
 
+  <div class="card weather-card">
+    <h3>🌦️ 天氣提醒</h3>
+    <p>此行程為 2026 年未來日期，精準天氣請出發前 7–10 天更新。五月下旬關西通常白天溫暖、早晚微涼，建議薄外套、防曬、摺疊傘。</p>
+  </div>
+</div>
+
+<div class="grid">
   <div class="card">
-    <h3>🏠 住宿</h3>
-    <p><b>5/23 - 5/27</b><br>相鐵 FRESA INN 京都四條烏丸</p>
-    <a target="_blank" href="https://maps.app.goo.gl/NWdPBffshNfAvLSY6?g_st=ipc">Google Map</a>
-    <p><b>5/27 - 5/30</b><br>ホテル・アンドルームス京都七条</p>
-    <a target="_blank" href="https://maps.app.goo.gl/rWsgZ8T94aN2nRBi7?g_st=ic">Google Map</a>
+    <h3>🏠 5/23 - 5/27</h3>
+    <div class="cover-wrap"><img class="cover hotel-img" src="${IMG.fresa}" alt="相鐵FRESA INN 京都四條烏丸"></div>
+    <p><b>相鐵FRESA INN 京都四條烏丸</b><br>相鉄フレッサイン 京都四条烏丸</p>
+    <a class="map-btn" target="_blank" href="https://maps.app.goo.gl/NWdPBffshNfAvLSY6?g_st=ipc">📍 Google Map</a>
+  </div>
+
+  <div class="card">
+    <h3>🏠 5/27 - 5/30</h3>
+    <div class="cover-wrap"><img class="cover hotel-img" src="${IMG.androoms}" alt="京都七條安住睦世酒店"></div>
+    <p><b>京都七條安住睦世酒店</b><br>ホテル・アンドルームス京都七条</p>
+    <a class="map-btn" target="_blank" href="https://maps.app.goo.gl/rWsgZ8T94aN2nRBi7?g_st=ic">📍 Google Map</a>
   </div>
 </div>
 
@@ -212,109 +471,162 @@ html:`
     <span class="badge">5/24 伏見稻荷・清水寺</span>
     <span class="badge">5/25 二条城・京都御苑・南禪寺</span>
     <span class="badge">5/26 奈良・宇治</span>
-    <span class="badge">5/27 嵐山・保津峽遊船</span>
-    <span class="badge">5/28 天橋立・伊根舟屋</span>
-    <span class="badge">5/29 京都市區巡禮</span>
+    <span class="badge">5/27 換飯店・保津峽・嵐山</span>
+    <span class="badge">5/28 天橋立・伊根・美山</span>
+    <span class="badge">5/29 京都市區自由</span>
     <span class="badge">5/30 東西本願寺・回國</span>
   </p>
 </div>
-
-<div class="card">
-  <h3>🌦️ 天氣提醒</h3>
-  <p>此行程為 2026 年未來日期，逐日準確天氣請出發前 7–10 天更新。五月下旬關西通常白天溫暖、早晚偏涼，建議薄外套、防曬、摺疊傘都帶。</p>
-</div>
 `
 },
+
 {
 id:"d523",
 title:"5/23",
 date:"5/23（六）入境日本｜抵達京都｜錦市場",
+weather:"抵達日，移動為主。建議薄外套放隨身包，晚上逛錦市場周邊可能微涼。",
+routes:[
+["關西機場 → 京都車站","根據入境時間可搭 HARUKA：13:14 關西機場 → 14:34 京都車站，或 13:44 關西機場 → 15:04 京都車站。"],
+["京都車站 → 四条站","搭京都市營烏丸線・國際會館行，搭 2 站到四条站。從 4 號出口出來，步行約 2 分鐘到飯店。"],
+["飯店 → 錦市場","飯店 Check-in 並稍作休息後，從相鐵FRESA INN 京都四條烏丸步行約 9 分鐘到錦市場。"],
+["錦市場 → 錦天滿宮","錦市場逛完後步行前往錦天滿宮。"]
+],
 places:[
-["關西機場 → 京都","HARUKA 可搭 13:14→14:34 或 13:44→15:04。抵達京都後轉京都市營烏丸線到四条，4號出口步行約2分鐘到飯店。","https://source.unsplash.com/1200x800/?kansai-airport,haruka-train","https://www.google.com/maps/search/?api=1&query=Kansai+Airport"],
-["相鐵FRESA INN 京都四條烏丸","位於四条烏丸附近，交通方便，適合作為京都市區與周邊景點移動的住宿點。","https://source.unsplash.com/1200x800/?kyoto,hotel","https://maps.app.goo.gl/NWdPBffshNfAvLSY6?g_st=ipc"],
-["錦市場","京都代表性的傳統市場，有京漬物、海鮮、甜點、串燒與各式小吃，很適合抵達日輕鬆散步覓食。","https://source.unsplash.com/1200x800/?nishiki-market,kyoto","https://maps.app.goo.gl/X6jWX8faGuUwZnQ37"],
-["錦天滿宮","位於新京極商店街附近的小巧神社，以學問、智慧與祈願聞名，夜晚燈籠氛圍很有京都感。","https://source.unsplash.com/1200x800/?kyoto,shrine,lantern","https://maps.app.goo.gl/2y5j2H9z48KcpknV8"]
+["相鐵FRESA INN 京都四條烏丸",IMG.fresa,"位於四条烏丸附近，交通方便，適合作為前半段京都行程的住宿點。","https://maps.app.goo.gl/NWdPBffshNfAvLSY6?g_st=ipc"],
+["錦市場",IMG.nishiki,"京都知名市場，有京漬物、海鮮、小吃、甜點與伴手禮，很適合抵達日輕鬆覓食。","https://maps.app.goo.gl/X6jWX8faGuUwZnQ37"],
+["錦天滿宮",IMG.nishikiTenmangu,"位於新京極商店街附近的小巧神社，以學問與祈願聞名，夜晚燈籠氛圍很有京都感。","https://maps.app.goo.gl/2y5j2H9z48KcpknV8"]
 ]
 },
+
 {
 id:"d524",
 title:"5/24",
 date:"5/24（日）伏見稲荷大社｜八坂神社｜祇園｜清水寺",
+weather:"步行量很高的一天。建議好走鞋、防曬、水，午後若下雨可彈性縮短清水寺周邊停留。",
+routes:[
+["飯店 → 伏見稻荷大社","四条站 → 京都站：京都市營烏丸線・竹田行，搭 2 站。京都站 → 稲荷站：JR 奈良線・城陽行，搭 2 站。出站就是伏見稻荷大社鳥居。"],
+["伏見稻荷 → 祇園四条","回程步行至伏見稲荷〔京阪線〕，搭京阪本線準急・出町柳行，伏見稲荷 → 祇園四条，搭 5 站。6 號出口出來就是八坂神社前的大馬路。"],
+["八坂神社 → 高台寺 → 二年坂・三年坂・清水坂 → 清水寺","此段皆為步行區域，沿路可慢慢逛祇園、東山石板路與商店街。"],
+["清水寺 → 飯店","若累可搭：清水五条 → 東福寺，京阪本線普通/準急・中之島行或淀屋橋行，搭 2 站。東福寺 → 京都，JR奈良線・京都行，搭 1 站。京都 → 四条，京都市營烏丸線・國際會館行，搭 2 站。"]
+],
 places:[
-["伏見稲荷大社","京都最具代表性的神社之一，以綿延山道的千本鳥居聞名。建議早點去，人潮比較少、拍照也更乾淨。","https://source.unsplash.com/1200x800/?fushimi-inari,kyoto","https://www.google.com/maps/search/?api=1&query=Fushimi+Inari+Taisha"],
-["八坂神社","祇園地區的重要神社，也是京都祭典文化的核心之一。從祇園四条出來後很適合一路步行往東山方向。","https://source.unsplash.com/1200x800/?yasaka-shrine,kyoto","https://maps.app.goo.gl/uTqC3beoXdf6Yt9X6"],
-["高台寺","豐臣秀吉正室寧寧所建，庭園與夜間點燈很有名，路線上可順遊二三年坂。","https://source.unsplash.com/1200x800/?kodaiji,kyoto","https://maps.app.goo.gl/M8cEatX2NM4p96eR7"],
-["二年坂・三年坂・清水坂","京都最經典的石板坡道商店街，沿途有茶屋、伴手禮、和風雜貨與拍照點。","https://source.unsplash.com/1200x800/?sannenzaka,kyoto","https://maps.app.goo.gl/6CZKQHjGkq8Wnckm9"],
-["清水寺","京都代表性世界文化遺產，以清水舞台與眺望京都市景聞名。傍晚前後光線很美，但人也會多。","https://source.unsplash.com/1200x800/?kiyomizudera,kyoto","https://maps.app.goo.gl/gA4ikYNsTQvPRWie8"]
+["伏見稲荷大社",IMG.fushimi,"京都最具代表性的神社之一，以綿延山道的千本鳥居聞名。建議早點去，人潮比較少。","https://www.google.com/maps/search/?api=1&query=Fushimi+Inari+Taisha"],
+["八坂神社",IMG.yasaka,"祇園地區的重要神社，也是京都祭典文化的核心之一。","https://maps.app.goo.gl/uTqC3beoXdf6Yt9X6"],
+["高台寺",IMG.kodaiji,"豐臣秀吉正室寧寧所建，庭園與建築氛圍優雅，適合與二三年坂順路安排。","https://maps.app.goo.gl/M8cEatX2NM4p96eR7"],
+["二年坂・三年坂・清水坂",IMG.sannenzaka,"京都最經典石板坡道商店街，沿途有茶屋、伴手禮與和風雜貨。","https://maps.app.goo.gl/6CZKQHjGkq8Wnckm9"],
+["清水寺",IMG.kiyomizu,"京都代表性世界文化遺產，以清水舞台與眺望京都市景聞名。","https://maps.app.goo.gl/gA4ikYNsTQvPRWie8"]
 ]
 },
+
 {
 id:"d525",
 title:"5/25",
-date:"5/25（一）京都御苑｜平安神宮｜南禪寺",
+date:"5/25（一）二条城｜京都御苑｜平安神宮｜南禪寺",
+weather:"寺院與庭園日，步行量中高。建議薄外套、防曬，南禪寺水路閣周邊可多留拍照時間。",
+routes:[
+["飯店 → 二条城","四条 → 烏丸御池：京都市營烏丸線・國際會館行，搭 1 站。烏丸御池 → 二条城前：京都市營東西線・太秦天神川行，搭 1 站。1 號出口出來對面就是二条城。"],
+["二条城 → 京都御苑","二条城前 → 烏丸御池：京都市營東西線・湖浜大津行，搭 1 站。烏丸御池 → 今出川：京都市營烏丸線・國際會館行，搭 2 站。3 號出口出來，從今出川御門進入御苑。"],
+["京都御苑 → 平安神宮","逛完從京都御苑・間之町口出來，往丸太町站 1 號出口。丸太町 → 烏丸御池：京都市營烏丸線・竹田行，搭 1 站。烏丸御池 → 東山：京都市營東西線・六地藏行，搭 3 站。1 號出口出來步行約 10 分鐘。"],
+["平安神宮 → 南禪寺","步行約 18 分鐘可到南禪寺。"],
+["南禪寺 → 飯店","蹴上 → 烏丸御池：京都市營東西線・太秦天神川行，搭 4 站。烏丸御池 → 四条：京都市營烏丸線・竹田行，搭 1 站。"]
+],
 places:[
-["二条城","德川家康建造的城郭，見證江戶幕府開始與結束的重要歷史場域。二之丸御殿與庭園很值得慢慢看。","https://source.unsplash.com/1200x800/?nijo-castle,kyoto","https://maps.app.goo.gl/b1SHgCGyDYYr3qo38"],
-["京都御苑","京都市中心的大型綠地，曾是公家宅邸聚集區。適合散步、拍自然感照片，也能感受京都較安靜的一面。","https://source.unsplash.com/1200x800/?kyoto-gyoen","https://maps.app.goo.gl/9ud4gSuqZAmnD99Q7"],
-["平安神宮","以朱紅色大鳥居與寬闊境內聞名，建築風格華麗，與京都御所、南禪寺路線能串成一日。","https://source.unsplash.com/1200x800/?heian-jingu,kyoto","https://www.google.com/maps/search/?api=1&query=Heian+Jingu"],
-["南禪寺","京都禪寺代表之一，境內水路閣非常有特色，紅磚拱門與寺院氛圍形成很漂亮的對比。","https://source.unsplash.com/1200x800/?nanzenji,kyoto","https://www.google.com/maps/search/?api=1&query=Nanzenji+Kyoto"]
+["二条城",IMG.nijo,"德川家康建造的城郭，見證江戶幕府歷史。二之丸御殿與庭園很值得慢慢看。","https://maps.app.goo.gl/b1SHgCGyDYYr3qo38"],
+["京都御苑",IMG.gyoen,"京都市中心大型綠地，曾是公家宅邸聚集區，適合散步、拍自然感照片。","https://maps.app.goo.gl/9ud4gSuqZAmnD99Q7"],
+["平安神宮",IMG.heian,"以朱紅色大鳥居與寬闊境內聞名，建築風格華麗。","https://www.google.com/maps/search/?api=1&query=Heian+Jingu"],
+["南禪寺",IMG.nanzenji,"京都禪寺代表之一，境內水路閣很有特色，紅磚拱門與寺院氛圍形成漂亮對比。","https://www.google.com/maps/search/?api=1&query=Nanzenji+Kyoto"]
 ]
 },
+
 {
 id:"d526",
 title:"5/26",
 date:"5/26（二）興福寺｜奈良公園｜宇治｜平等院",
+weather:"跨城市移動日。戶外時間多，建議防曬、雨傘、輕便包包。奈良鹿群附近食物要收好。",
+routes:[
+["京都 → 近鉄奈良","京都站搭近鉄奈良線特急・近鉄奈良行，搭 3 站到近鉄奈良。出口 2 出來後沿路往奈良公園方向走。"],
+["近鉄奈良 → 興福寺 → 奈良公園・鹿苑","此段可步行，先到興福寺，再一路走往奈良公園與鹿苑。"],
+["奈良 → 宇治","從近鉄奈良站步行約 15–20 分鐘到 JR 奈良站。JR 奈良 → 宇治：JR関西本線Dみやこ路快速・京都行，搭 12 站。"],
+["宇治散策","宇治站出來後可走平等院表參道 → 平等院 → 宇治神社 → 宇治上神社。"],
+["宇治 → 京都","宇治 → 京都：JR関西本線Dみやこ路快速・京都行，搭 4 站。晚上可逛街買伴手禮。"]
+],
 places:[
-["興福寺","奈良代表寺院之一，五重塔是奈良的經典景色。從近鐵奈良站步行前往奈良公園會順路經過。","https://source.unsplash.com/1200x800/?kofukuji,nara","https://www.google.com/maps/search/?api=1&query=Kofukuji+Nara"],
-["奈良公園・鹿苑","奈良最經典區域，可以近距離看到鹿群。記得鹿仙貝要拿穩，不要逗鹿。","https://source.unsplash.com/1200x800/?nara-park,deer","https://www.google.com/maps/search/?api=1&query=Nara+Park"],
-["平等院表參道","宇治車站到平等院一帶的商店街，抹茶甜點、伴手禮與茶香氛圍很濃。","https://source.unsplash.com/1200x800/?uji,matcha,japan","https://www.google.com/maps/search/?api=1&query=Byodoin+Omotesando+Uji"],
-["平等院","十円硬幣上的鳳凰堂原型，宇治最重要景點之一。建築倒映在池中的畫面非常經典。","https://source.unsplash.com/1200x800/?byodoin,uji","https://www.google.com/maps/search/?api=1&query=Byodoin+Temple+Uji"],
-["宇治神社","位於宇治川附近的小巧神社，與宇治上神社、平等院一帶可順路散步。","https://source.unsplash.com/1200x800/?uji-shrine,japan","https://www.google.com/maps/search/?api=1&query=Uji+Shrine"]
+["興福寺",IMG.kofukuji,"奈良代表寺院之一，五重塔是奈良經典景色。","https://www.google.com/maps/search/?api=1&query=Kofukuji+Nara"],
+["奈良公園・鹿苑",IMG.naraPark,"奈良最經典區域，可近距離看到鹿群。記得鹿仙貝要拿穩，不要逗鹿。","https://www.google.com/maps/search/?api=1&query=Nara+Park"],
+["平等院",IMG.byodoin,"十円硬幣上的鳳凰堂原型，宇治最重要景點之一，池中倒影非常經典。","https://www.google.com/maps/search/?api=1&query=Byodoin+Temple+Uji"],
+["宇治神社",IMG.ujiShrine,"位於宇治川附近的小巧神社，可與平等院、宇治上神社一起順遊。","https://www.google.com/maps/search/?api=1&query=Uji+Shrine"],
+["宇治上神社",IMG.ujigami,"宇治地區重要神社，氛圍清幽，適合安排在宇治散策後段。","https://www.google.com/maps/search/?api=1&query=Ujigami+Shrine"]
 ]
 },
+
 {
 id:"d527",
 title:"5/27",
 date:"5/27（三）換飯店｜保津峽遊船｜天龍寺｜嵐山竹林",
+weather:"遊船日，船上風較明顯。建議薄外套，並確認 KLOOK 集合時間與地點。",
+routes:[
+["第一間飯店 → 第二間飯店","9:00 退房。四条 → 京都：京都市營烏丸線・竹田行，搭 2 站。京都車站 C6 出口出來後步行約 6–7 分鐘到ホテル・アンドルームス京都七条寄放行李。"],
+["京都 → 龜岡遊船處","寄放行李後前往嵐山方向。京都 → 亀岡：JR山陰本線〔嵯峨野線〕・園部行，搭 10 站。從北口出來後步行約 5–10 分鐘到保津峽遊船處。"],
+["11:00 保津峽遊船","已在 KLOOK 買票。遊船時長約 1.5–2 小時，終點在龜山公園旁。"],
+["龜山公園 → 天龍寺 → 嵐山竹林 → Coffee Shop Yamamoto","此段以步行為主。嵐山竹林可從野宮神社附近步行進入，之後走到 Coffee Shop Yamamoto 約 10 分鐘。"],
+["嵯峨嵐山 → 京都","嵯峨嵐山 → 京都：JR山陰本線〔嵯峨野線〕・京都行，搭 7 站。"]
+],
 places:[
-["ホテル・アンドルームス京都七条","靠近京都車站與七条區域，適合後半段移動與回程搭 HARUKA。早上寄放行李後再去嵐山。","https://source.unsplash.com/1200x800/?kyoto,hotel,street","https://maps.app.goo.gl/rWsgZ8T94aN2nRBi7?g_st=ic"],
-["保津峽遊船","從龜岡出發，沿保津川順流而下到嵐山，約 1.5–2 小時。你已在 KLOOK 買票，記得提早到。","https://source.unsplash.com/1200x800/?hozugawa,river,kyoto","https://maps.app.goo.gl/NG1V8GmNn6hZJXf96?g_st=ic"],
-["龜山公園","保津峽遊船終點附近，接著可步行前往天龍寺與嵐山竹林。","https://source.unsplash.com/1200x800/?arashiyama,park","https://maps.app.goo.gl/7p98jT4yWLGGTXGA6?g_st=ic"],
-["天龍寺","嵐山代表寺院，庭園景色很美，也是世界文化遺產。適合安排在竹林前後。","https://source.unsplash.com/1200x800/?tenryuji,kyoto","https://www.google.com/maps/search/?api=1&query=Tenryuji+Kyoto"],
-["嵐山竹林","京都經典竹林步道，建議避開正中午人潮。從野宮神社附近步行可接到竹林。","https://source.unsplash.com/1200x800/?arashiyama,bamboo","https://www.google.com/maps/search/?api=1&query=Arashiyama+Bamboo+Grove"],
-["Coffee Shop Yamamoto","嵐山老派咖啡店，適合逛完竹林後休息吃甜點。","https://source.unsplash.com/1200x800/?japanese,cafe,pancake","https://maps.app.goo.gl/kn63LhaAazwLcGh76?g_st=ic"]
+["ホテル・アンドルームス京都七条",IMG.androoms,"後半段住宿，靠近京都車站與七条區域，方便回程搭 HARUKA。","https://maps.app.goo.gl/rWsgZ8T94aN2nRBi7?g_st=ic"],
+["保津峽遊船",IMG.hozugawa,"從龜岡出發，沿保津川順流而下到嵐山，能欣賞峽谷、河川與山景。","https://maps.app.goo.gl/NG1V8GmNn6hZJXf96?g_st=ic"],
+["天龍寺",IMG.tenryuji,"嵐山代表寺院，也是世界文化遺產。庭園景色很美，適合慢慢逛。","https://www.google.com/maps/search/?api=1&query=Tenryuji+Kyoto"],
+["嵐山竹林小徑",IMG.bamboo,"京都經典竹林步道，建議避開正中午人潮。","https://www.google.com/maps/search/?api=1&query=Arashiyama+Bamboo+Grove"],
+["Coffee Shop Yamamoto",IMG.yamamoto,"嵐山老派咖啡店，適合逛完竹林後休息吃甜點。","https://maps.app.goo.gl/kn63LhaAazwLcGh76?g_st=ic"]
 ]
 },
+
 {
 id:"d528",
 title:"5/28",
-date:"5/28（四）天橋立｜伊根舟屋 KLOOK 一日 Plan",
+date:"5/28（四）天橋立｜伊根舟屋｜美山合掌村 KLOOK 一日 Plan",
+weather:"北京都與海線行程，風可能較大。建議防風薄外套、摺疊傘、暈車藥視需求準備。",
+routes:[
+["KLOOK 一日 Plan","此日為天橋立、伊根舟屋、美山合掌村一日行程。依 KLOOK 集合時間與地點為主，前一晚再次確認集合地點、集合時間與緊急聯絡方式。"],
+["行程連結","https://s.klook.com/c/Ey_0k8OK3Y"]
+],
 places:[
-["天橋立","日本三景之一，以狹長松林沙洲橫跨海灣聞名。可搭纜車到展望台，用倒著看的方式欣賞飛龍觀。","https://source.unsplash.com/1200x800/?amanohashidate,japan","https://www.google.com/maps/search/?api=1&query=Amanohashidate"],
-["伊根舟屋","沿海而建的傳統舟屋聚落，一樓停船、二樓生活，是京都北部非常有特色的景色。","https://source.unsplash.com/1200x800/?ine,funaya,japan","https://www.google.com/maps/search/?api=1&query=Ine+Funaya"]
+["天橋立",IMG.amanohashidate,"日本三景之一，以狹長松林沙洲橫跨海灣聞名。可搭纜車到展望台欣賞飛龍觀。","https://www.google.com/maps/search/?api=1&query=Amanohashidate"],
+["伊根舟屋",IMG.ine,"沿海而建的傳統舟屋聚落，一樓停船、二樓生活，是京都北部很有特色的景色。","https://www.google.com/maps/search/?api=1&query=Ine+Funaya"],
+["美山合掌村",IMG.miyama,"保留茅葺屋根民家聚落，能感受京都山村風景與傳統生活氛圍。","https://www.google.com/maps/search/?api=1&query=Miyama+Kayabuki+no+Sato"]
 ]
 },
+
 {
 id:"d529",
 title:"5/29",
-date:"5/29（五）京都市區巡禮",
+date:"5/29（五）京都市區巡禮｜自由安排",
+weather:"自由日。可視體力安排購物、咖啡廳、祇園散步或補景點。",
+routes:[
+["自由安排建議","可安排河原町、祇園、京都車站、伴手禮採買、藥妝或咖啡廳。這天很適合把想買的東西處理完，避免最後一天趕機場。"]
+],
 places:[
-["京都市區自由巡禮","這天可以依體力補逛河原町、祇園、京都車站、伴手禮店，或安排咖啡廳與購物。","https://source.unsplash.com/1200x800/?kyoto,street","https://www.google.com/maps/search/?api=1&query=Kyoto+Kawaramachi"],
-["伴手禮採買","建議把藥妝、抹茶甜點、京都限定點心放這天處理，避免最後一天趕機場太緊。","https://source.unsplash.com/1200x800/?kyoto,souvenir","https://www.google.com/maps/search/?api=1&query=Kyoto+Station+Souvenir"]
+["京都市區自由巡禮",IMG.nishiki,"這天可依體力與天氣調整。若前幾天有景點沒逛完，也可以放到今天補。","https://www.google.com/maps/search/?api=1&query=Kyoto+Kawaramachi"]
 ]
 },
+
 {
 id:"d530",
 title:"5/30",
 date:"5/30（六）東西本願寺｜回國",
+weather:"回國日，以輕鬆步行與移動為主。行李寄放後，不建議安排太遠景點。",
+routes:[
+["飯店 → 東本願寺 / 西本願寺","10:00 退房並寄放行李。從飯店步行可直接抵達東本願寺，再視體力步行或短程移動到西本願寺。"],
+["京都 → 關西空港","14:00 京都 → 15:20 關西空港，搭 JR東海道本線 HARUKA 33號。建議提早回飯店取行李，再前往京都車站。"]
+],
 places:[
-["東本願寺","從七条住宿區步行可達，境內開闊莊嚴，很適合回國日前安排輕鬆散步。","https://source.unsplash.com/1200x800/?higashi-honganji,kyoto","https://www.google.com/maps/search/?api=1&query=Higashi+Honganji+Kyoto"],
-["西本願寺","京都重要寺院之一，與東本願寺距離不遠，可一起安排。建築宏偉，氛圍沉穩。","https://source.unsplash.com/1200x800/?nishi-honganji,kyoto","https://www.google.com/maps/search/?api=1&query=Nishi+Honganji+Kyoto"],
-["京都 → 關西空港","14:00 京都 → 15:20 關西空港，搭 JR HARUKA 33號。建議預留行李領取與車站移動時間。","https://source.unsplash.com/1200x800/?haruka,train,japan","https://www.google.com/maps/search/?api=1&query=Kyoto+Station"]
+["東本願寺",IMG.higashi,"從七条住宿區步行可達，境內開闊莊嚴，很適合回國日前輕鬆散步。","https://www.google.com/maps/search/?api=1&query=Higashi+Honganji+Kyoto"],
+["西本願寺",IMG.nishi,"京都重要寺院之一，與東本願寺距離不遠，建築宏偉、氛圍沉穩。","https://www.google.com/maps/search/?api=1&query=Nishi+Honganji+Kyoto"]
 ]
 },
+
 {
 id:"currency",
-title:"匯率換算",
+title:"匯率",
 html:`
 <h2>💱 匯率換算</h2>
 <div class="card">
@@ -325,7 +637,7 @@ html:`
   <input id="jpy" type="number" placeholder="例如 5500">
 
   <div class="result" id="twdResult">約 NT$ 0</div>
-  <p class="small">可依出發當天實際匯率自行修改上方數字。</p>
+  <p class="small">可依出發當天實際匯率自行修改。</p>
 </div>
 
 <div class="grid">
@@ -333,9 +645,12 @@ html:`
   <div class="card"><h3>¥3,000</h3><p>約 NT$ <span class="quick" data-jpy="3000"></span></p></div>
   <div class="card"><h3>¥5,000</h3><p>約 NT$ <span class="quick" data-jpy="5000"></span></p></div>
   <div class="card"><h3>¥10,000</h3><p>約 NT$ <span class="quick" data-jpy="10000"></span></p></div>
+  <div class="card"><h3>¥30,000</h3><p>約 NT$ <span class="quick" data-jpy="30000"></span></p></div>
+  <div class="card"><h3>¥50,000</h3><p>約 NT$ <span class="quick" data-jpy="50000"></span></p></div>
 </div>
 `
 },
+
 {
 id:"phrases",
 title:"日文字卡",
@@ -355,10 +670,14 @@ html:`
     ["我要辦理入住","チェックインをお願いします"],
     ["我要辦理退房","チェックアウトをお願いします"],
     ["請問這班車有到京都嗎？","この電車は京都に行きますか？"],
+    ["請問要在哪裡搭車？","どこで乗ればいいですか？"],
     ["請問這裡可以拍照嗎？","ここで写真を撮ってもいいですか？"],
     ["不好意思，我不太會說日文","すみません、日本語があまり話せません"],
     ["請說慢一點","ゆっくり話してください"],
-    ["可以幫我叫計程車嗎？","タクシーを呼んでもらえますか？"]
+    ["可以幫我叫計程車嗎？","タクシーを呼んでもらえますか？"],
+    ["我們想去這裡","ここに行きたいです"],
+    ["請幫我看一下這個地址","この住所を見てもらえますか？"],
+    ["謝謝你的幫忙","助かりました。ありがとうございます"]
   ].map(p=>`
     <div class="card">
       <div class="cn">${p[0]}</div>
@@ -383,6 +702,7 @@ function buildNav(){
 
 function buildSections(){
   const app=document.getElementById("app");
+
   sections.forEach((s,i)=>{
     const sec=document.createElement("section");
     sec.className="section"+(i===0?" active":"");
@@ -392,26 +712,42 @@ function buildSections(){
       sec.innerHTML=s.html;
     }else{
       sec.innerHTML=`
-        <h2>${s.date}</h2>
-        <div class="card">
-          <h3>🌦️ 今日天氣備忘</h3>
-          <p>${weatherNote[s.title]}</p>
-          <p class="small">實際天氣請出發前更新：最高/最低溫、降雨機率、是否需要雨具。</p>
+        <div class="day-head">
+          <h2>${s.date}</h2>
+          <p class="small">點選上方日期分頁可切換每日行程。</p>
         </div>
+
+        <div class="card weather-card">
+          <h3>🌦️ 今日天氣備忘</h3>
+          <p>${s.weather}</p>
+          <p class="small">實際天氣請出發前 7–10 天更新。</p>
+        </div>
+
+        <div class="card route-card">
+          <h3>🚃 今日交通動線</h3>
+          ${s.routes.map(r=>`
+            <div class="route">
+              <div class="route-title">${r[0]}</div>
+              <p>${r[1]}</p>
+            </div>
+          `).join("")}
+        </div>
+
         <div class="timeline">
           ${s.places.map(p=>`
             <div class="stop">
-              <div class="card">
+              <div class="card place-card">
                 <h3>${p[0]}</h3>
-                <img class="place-img" src="${p[2]}" alt="${p[0]}">
-                <p>${p[1]}</p>
-                <a href="${p[3]}" target="_blank">📍 開啟 Google Map</a>
+                <div class="cover-wrap"><img class="cover" src="${p[1]}" alt="${p[0]}" loading="lazy"></div>
+                <p>${p[2]}</p>
+                <a class="map-btn" href="${p[3]}" target="_blank">📍 開啟 Google Map</a>
               </div>
             </div>
           `).join("")}
         </div>
       `;
     }
+
     app.appendChild(sec);
   });
 }
@@ -419,8 +755,11 @@ function buildSections(){
 function show(id){
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+
   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-  [...document.querySelectorAll("nav button")].find(b=>b.textContent===sections.find(s=>s.id===id).title).classList.add("active");
+  const title=sections.find(s=>s.id===id).title;
+  [...document.querySelectorAll("nav button")].find(b=>b.textContent===title).classList.add("active");
+
   window.scrollTo({top:0,behavior:"smooth"});
   updateCurrency();
 }
@@ -429,9 +768,11 @@ function updateCurrency(){
   const rate=document.getElementById("rate");
   const jpy=document.getElementById("jpy");
   const result=document.getElementById("twdResult");
+
   if(rate && jpy && result){
     const twd=(Number(jpy.value||0)*Number(rate.value||0)).toFixed(0);
     result.textContent="約 NT$ "+twd;
+
     document.querySelectorAll(".quick").forEach(el=>{
       el.textContent=(Number(el.dataset.jpy)*Number(rate.value||0)).toFixed(0);
     });
